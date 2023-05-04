@@ -1,4 +1,4 @@
-# MallSafeMeal
+# MallSafeMeals
 Final Project Barchelor Degree
 
 This repository will contain only the FrontEnd app from a delivery food organization in a Mall.
