@@ -9,16 +9,14 @@ const RestauranteCard = ({
     id,
     imgUrl,
     title,
-    rating,
+    pontuacao,
     genre,
-    address,
-    short_description,
-    disses,
-    long,
-    lat
+    breve_descricao,
+    pratos,
+
 }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity className="bg-white mr-3 shadow ">
       <Image 
       source={{uri: imgUrl}}
       className="h-36 w-64 rounde-sm"
@@ -32,7 +30,7 @@ const RestauranteCard = ({
             <Text className="text-xs text-gray-500">
                 <Text style={{
                     color:"#94395b"
-                }}> {rating}</Text> • {genre}
+                }}> {pontuacao}</Text> • {genre}
             </Text>
         </View>
         <View className="flex-row items-center space-x-1">

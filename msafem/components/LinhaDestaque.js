@@ -26,15 +26,34 @@ const LinhaDestaque = ({id, title, description}) => {
         title="Mc Donald's"
         rating={4.2}
         genre="Fast Food"
-        address="test"
         short_description="Uma pequena descrição"
         disses={[]}
-        long={0}
-        lat={0}
-        
+
         />
 
-       
+        <RestauranteCard 
+        
+        id = {2}
+        imgUrl = "https://tb-static.uber.com/prod/image-proc/processed_images/b459e72ad7b55ace5cefa4f09a1f2dcd/3ac2b39ad528f8c8c5dc77c59abb683d.jpeg"
+        title="Pizza Hut"
+        rating={4.5}
+        genre="Fast Food"
+        short_description="Uma pequena descrição"
+        disses={[]}
+
+        />    
+
+      <RestauranteCard 
+        
+        id = {3}
+        imgUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_FRxIO7oagiqcOAdRAWcFtFzjG6m7RblXx3UYtdWzxG8zhvovmblcbif8E9jZjDdjq9Q&usqp=CAU"
+        title="KFC"
+        rating={4.1}
+        genre="Fast Food"
+        short_description="Uma pequena descrição"
+        disses={[]}
+
+        />  
       </ScrollView>
     </View>
   )

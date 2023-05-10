@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from 'react-native'
+import { ScrollView, } from 'react-native'
 import React, { Component } from 'react'
 import CardCategoria from './CardCategoria'
 
@@ -14,7 +14,7 @@ export class Categorias extends Component {
       showsHorizontalScrollIndicator={false}
       >
         {/* CardCategoria */}
-      <CardCategoria title="FastFood"
+      <CardCategoria title="FastFood" 
       imgUrl="https://medien.tophotel.de/uploads/2022/03/Food-Zoom-2022_web.jpg" />
       <CardCategoria title="Carne"
       imgUrl="https://discoverbelleville.ca/wp-content/uploads/2020/08/foodBanner-758x439.jpg" />

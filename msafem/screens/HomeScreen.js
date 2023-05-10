@@ -1,13 +1,21 @@
 import { View, SafeAreaView, Text, Image, TextInput, ScrollViewBase, ScrollView } from 'react-native';
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import logo from '../assets/logo100x100.png';
 import {UserIcon, ChevronDownIcon, MagnifyingGlassIcon, AdjustmentsVerticalIcon} from "react-native-heroicons/solid";
 import { Categorias } from '../components/Categorias';
 import LinhaDestaque from '../components/LinhaDestaque';
+import sanityClient from '../sanity';
+import categoria from '../sanity/schemas/categoria';
+
+
  
 const HomeScreen = () => {
     const navigation = useNavigation();
+
+    // Trazer informação do Backend 
+    const [destaqueCategorias, setDestaqueCategorias] = useState([]);
+    
 
     // Permite alterar o Default Header da aplicação
     useLayoutEffect(() => {
@@ -17,6 +25,24 @@ const HomeScreen = () => {
         
     }, []);
 
+    // Corre quando o componente é carregado
+    useEffect(()=>{
+      // Querie que irá trazer todos os destaques, restaurantes e os seus pratos
+      sanityClient.fetch (
+          `
+          *[_type == "destaque"] {
+            ...,
+            restaurantes[]->{
+              ...,
+              pratos[]->
+            }
+          }
+          `
+        ).then( data => {
+          setDestaqueCategorias(data);
+        })
+    }, [])
+    console.log(destaqueCategorias)
   return (
     <SafeAreaView className="bg-white pt-5">
       {/* Visualização Cabeçalho */}
@@ -52,29 +78,22 @@ const HomeScreen = () => {
       }}
       >
         {/* Categorias */}
-        <Categorias />
+        <Categorias  />
         
         {/* linhas de destaques  */} 
         {/* Uma das possibilidades seria promover os 
             melhores restaurantes aos clientes cobrando algo por isso */} 
 
-        <LinhaDestaque 
-        id="1"
-        title="Em Destaque"
-        description="Lugar de destaque para os parceiros"
+        {destaqueCategorias?.map(categoria => (
+          
+          <LinhaDestaque 
+          key={categoria._id}
+          id={categoria._id}
+          title={categoria.name}
+          description={categoria.breve_descricao}
+         />
+          ))}
 
-        />
-        <LinhaDestaque
-        id="2"
-        title="Descontos"
-        description="Lugar de destaque para os parceiros com desconto"
-
-        />
-        <LinhaDestaque
-        id="3"
-        title="Ofertas"
-        description="Lugar de destaque para os parceiros com ofertas"
-        />
       </ScrollView>
 
     </SafeAreaView>
