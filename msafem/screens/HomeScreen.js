@@ -6,7 +6,7 @@ import {UserIcon, ChevronDownIcon, MagnifyingGlassIcon, AdjustmentsVerticalIcon}
 import { Categorias } from '../components/Categorias';
 import LinhaDestaque from '../components/LinhaDestaque';
 import sanityClient from '../sanity';
-import categoria from '../sanity/schemas/categoria';
+
 
 
  
@@ -42,7 +42,7 @@ const HomeScreen = () => {
           setDestaqueCategorias(data);
         })
     }, [])
-    console.log(destaqueCategorias)
+    //console.log(destaqueCategorias) //imprimir destaques
   return (
     <SafeAreaView className="bg-white pt-5">
       {/* Visualização Cabeçalho */}

@@ -1,9 +1,34 @@
 import { View, Text, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ArrowRightIcon } from 'react-native-heroicons/solid'
 import RestauranteCard from './RestauranteCard'
+import { client } from '../sanity'
 
-const LinhaDestaque = ({id, title, description}) => {
+
+const LinhaDestaque = ( {id, title, description}  ) => {
+
+  const [restaurantesDestaque, setRestaurantesDestaque] = useState([]);
+
+  useEffect( () => {
+    
+    client.fetch(   
+      `
+      *[ _type == "destaque" && _id == $id ]{
+        ...,
+        restaurantes[]->{
+          ...,
+          pratos[]->,
+          type-> {
+            name
+          }
+        },
+      }[0]
+      `, {id}).then( data => {
+        setRestaurantesDestaque(data);
+      })
+  }, [])
+  
+  console.log(restaurantesDestaque)
   return (
     <View>
       <View className="mt-4 flex-row items-center justify-between px-4">
@@ -17,43 +42,27 @@ const LinhaDestaque = ({id, title, description}) => {
       horizontal contentContainerStyle={{
         paddingHorizontal:15,
       }} showsHorizontalScrollIndicator={false} className="pt-4">
-        {/* Restaurantes */}
+      
+      {/* Restaurantes */}
+     
+      {restaurantesDestaque?.map( RestauranteCard => (
 
-        <RestauranteCard 
+          <RestauranteCard 
         
-        id = {1}
-        imgUrl = "https://gkpb.com.br/wp-content/uploads/2021/10/mcdonalds-fome-de-precinho.jpg"
-        title="Mc Donald's"
-        rating={4.2}
-        genre="Fast Food"
-        short_description="Uma pequena descrição"
-        disses={[]}
+          key={RestauranteCard._id}
+          id={RestauranteCard._id}
+          imgUrl={RestauranteCard.imagem}
+          title={RestauranteCard.name}
+          pontuacao={RestauranteCard.pontuacao}
+          breve_descricao={RestauranteCard.breve_descricao}
+          genre={RestauranteCard.tipo}
+          pratos={RestauranteCard.pratos}
 
-        />
-
-        <RestauranteCard 
+          />
         
-        id = {2}
-        imgUrl = "https://tb-static.uber.com/prod/image-proc/processed_images/b459e72ad7b55ace5cefa4f09a1f2dcd/3ac2b39ad528f8c8c5dc77c59abb683d.jpeg"
-        title="Pizza Hut"
-        rating={4.5}
-        genre="Fast Food"
-        short_description="Uma pequena descrição"
-        disses={[]}
-
-        />    
-
-      <RestauranteCard 
         
-        id = {3}
-        imgUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_FRxIO7oagiqcOAdRAWcFtFzjG6m7RblXx3UYtdWzxG8zhvovmblcbif8E9jZjDdjq9Q&usqp=CAU"
-        title="KFC"
-        rating={4.1}
-        genre="Fast Food"
-        short_description="Uma pequena descrição"
-        disses={[]}
+      ))}
 
-        />  
       </ScrollView>
     </View>
   )
